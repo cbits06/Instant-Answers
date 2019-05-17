@@ -1,0 +1,14 @@
+#
+# This is your en_gb language file. Please refer to the documentation for more information.
+#
+msgctxt "cosmos_keywords"
+msgid "planet"
+msgstr "planet"
+
+msgctxt "cosmos_keywords"
+msgid "moon"
+msgstr "moon"
+
+msgctxt "cosmos_keywords"
+msgid "creep"
+msgstr "creep"
