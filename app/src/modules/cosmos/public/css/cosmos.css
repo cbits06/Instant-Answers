@@ -1,5 +1,262 @@
 /**
 * This is your main SCSS file. Please refer to the documentation for more information.
 */
+.ia__cosmos__container {
+  font-family: Asap, 'Segoe UI', 'Helvetica', 'Droid Sans', sans-serif;
+  font-size: 14px;
+  border: 1px groove lightgrey;
+  padding: 24px;
+  color: #353c52;
+  display: block;
+}
+.ia__cosmos__container a {
+  color: black;
+  text-decoration: underline;
+}
+.ia__cosmos__container a:link {
+  color: black;
+  text-decoration: underline;
+}
+.ia__cosmos__container a:visited {
+  color: black;
+  text-decoration: underline;
+}
+.ia__cosmos__container a:hover {
+  color: black;
+  text-decoration: underline;
+}
+.ia__cosmos__container a:active {
+  color: black;
+  text-decoration: underline;
+}
+
+.ia__cosmos__header {
+  display: grid;
+  grid-template-columns: 70% 30%;
+}
+
+.ia__cosmos__left {
+  float: left;
+}
+
+.ia__cosmos__right {
+  padding: 24px;
+  width: 160px;
+  height: 160px;
+  background-color: black;
+  justify-self: end;
+  border-radius: 50%;
+  background-image: radial-gradient(white, rgba(0, 0, 0, 0.2) 2px, transparent 40px), radial-gradient(white, rgba(0, 0, 0, 0.15) 1px, transparent 30px), radial-gradient(white, rgba(0, 0, 0, 0.1) 2px, transparent 40px), radial-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1) 2px, transparent 30px);
+  background-size: 50px 50px;
+  background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+}
+
+.ia__cosmos__img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+}
+
+.ia__cosmos__title {
+  font-size: 28px;
+  display: block;
+  color: #353c52;
+  font-weight: bold;
+  padding-bottom: 12px;
+}
+
+.ia__cosmos__subtitle {
+  display: block;
+  padding-bottom: 12px;
+  font-weight: bold;
+}
+
+.ia__cosmos__discovery {
+  display: block;
+  padding-bottom: 12px;
+}
+
+.ia__cosmos_description {
+  display: block;
+  padding-bottom: 6px;
+}
+
+.ia__cosmos__wikilink {
+  display: block;
+  padding-bottom: 12px;
+}
+
+.ia__cosmos__orbital__title {
+  display: block;
+  color: #5c6f84;
+  font-weight: bold;
+}
+
+.ia__cosmos__orbital {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  padding-bottom: 12px;
+}
+
+.ia__cosmos__physical__title {
+  color: #5c6f84;
+  font-weight: bold;
+}
+
+.ia__cosmos__physical {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  padding-top: 12px;
+}
+
+.ia__cosmos__td-field {
+  padding-top: 12px;
+  font-weight: bold;
+}
+
+.ia__cosmos__btn {
+  position: absolute;
+  bottom: 0;
+  clear: both;
+  display: flex;
+  justify-content: center;
+  height: 56px;
+  line-height: 56px;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 500;
+  width: 100%;
+  left: 0;
+  border-top: 1px solid #e0e1e6;
+  cursor: pointer;
+  background-color: lightgrey;
+}
+
+.ia__cosmos__mobile {
+  display: none;
+}
+
+.ia__cosmos__orbital__expand {
+  display: none;
+}
+
+.ia__cosmos__physical__expand {
+  display: none;
+}
+
+/* Tablet*/
+@media (max-width: 1450px) {
+  .ia__cosmos__title {
+    font-size: 28px;
+    display: inline;
+    color: #353c52;
+    font-weight: bold;
+    padding-bottom: 12px;
+  }
+
+  .ia__cosmos__header {
+    display: inline;
+    grid-template-columns: 100%;
+  }
+
+  .ia__cosmos__left {
+    float: left;
+  }
+
+  .ia__cosmos__mobile {
+    float: right;
+    display: inline;
+    padding: 15px;
+    width: 100px;
+    height: 100px;
+    background-color: black;
+    justify-self: end;
+    border-radius: 50%;
+    background-image: radial-gradient(white, rgba(0, 0, 0, 0.2) 2px, transparent 40px), radial-gradient(white, rgba(0, 0, 0, 0.15) 1px, transparent 30px), radial-gradient(white, rgba(0, 0, 0, 0.1) 2px, transparent 40px), radial-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1) 2px, transparent 30px);
+    background-size: 50px 50px;
+    background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+  }
+
+  .ia__cosmos__img-mobile {
+    display: inline;
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+  }
+
+  .ia__cosmos__img {
+    display: none;
+  }
+
+  .ia__cosmos__right {
+    display: none;
+  }
+
+  .ia__cosmos__orbital {
+    display: none;
+    grid-template-columns: 100%;
+    padding-bottom: 12px;
+  }
+
+  .ia__cosmos__physical {
+    display: none;
+    grid-template-columns: 100%;
+    padding-bottom: 12px;
+  }
+
+  .ia__cosmos__physical-mobile {
+    grid-template-columns: 100%;
+    padding-bottom: 12px;
+  }
+
+  .ia__cosmos__orbital-mobile {
+    grid-template-columns: 100%;
+    padding-bottom: 12px;
+  }
+
+  .ia__cosmos__td-field {
+    padding-top: 12px;
+    font-weight: bold;
+    width: 50%;
+  }
+
+  .ia__cosmos__physical__title {
+    display: none;
+  }
+
+  .ia__cosmos__orbital__title {
+    display: none;
+  }
+
+  .ia__cosmos__physical__expand {
+    display: inline;
+    cursor: pointer;
+  }
+
+  .ia__cosmos__orbital__expand {
+    display: inline;
+    cursor: pointer;
+  }
+
+  .ia__cosmos__physical__expand:before {
+    content: "\25B8 ";
+    line-height: 12px;
+  }
+
+  .ia__cosmos__orbital__expand:before {
+    content: "\25B8 ";
+    line-height: 12px;
+  }
+
+  .ia__cosmos__physical__marker[open] summary:before {
+    content: "\25BE ";
+    line-height: 12px;
+  }
+
+  .ia__cosmos__orbital__marker[open] summary:before {
+    content: "\25BE ";
+    line-height: 12px;
+  }
+}
 
 /*# sourceMappingURL=cosmos.css.map */
