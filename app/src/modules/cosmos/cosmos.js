@@ -1,9 +1,6 @@
 var Promise = require("bluebird");
 var _ = require('@qwant/front-i18n')._;
-
 module.exports = {
-    
-
     getData: function (values, proxyURL, language, i18n) {
         const _ = i18n._;
         function formatNumber(num) {
@@ -11,7 +8,12 @@ module.exports = {
     };
         return new Promise(function (resolve, reject) {
             if (values && values[0]) {
-                const CACHE_KEY = 'ia_cosmos__' + language + "_"+values[2];
+                var query = values[0].split(' ');
+                var query = query.join('_');
+                console.log("QUERY: "+query);
+                    const CACHE_KEY = 'ia_cosmos__' + language + "_" + query;
+                console.log("CACHE KEY: "+CACHE_KEY);
+                
                 const CACHE_EXPIRE = 7200;
                 const redisTools = require('../../redis_tools');
                 redisTools.initRedis();
@@ -27,7 +29,7 @@ module.exports = {
                     } else {
                         var langue = language.split("_");
                         var tolower = values[0];
-                        var req = values[0].replace(/é|è/gi, "e").split(" ");
+                        var req = values[0].replace(/é|è/gi, "e").replace(/ï/gi, "i").split(" ");
                         var cosmos_str="";
                         var full_str="";
                         for (var i = 1; i <= req.length-1; i++) {
@@ -77,7 +79,6 @@ module.exports = {
                             var regexsm = new RegExp();
                             if (values[0].match(regexpz) == null  && values[0].match(regexm) == null) {
                                 var path = require('path');
-                                console.log("in THE IF ?: "+search_str);
                                 var alienFile = path.join(__dirname, "aliens.json");
                                 var aliens = require(alienFile);
                                 for (var i = 0; i <= 46; i++) {
@@ -100,12 +101,11 @@ module.exports = {
                             var wiki_request = "https://"+ langue[0] +".wikipedia.org/w/api.php?format=json&action=query&prop=extracts|pageimages&exintro&explaintext&generator=search&gsrsearch= intitle:"+ _('moon', 'cosmos_keywords') +" "+ full_str +"&gsrlimit=1&redirects=1";        
                             var body_type = 'themoon';
                         };
-                        if (values[0] === _('themoon', 'cosmos_keywords')) {
+                        if (values[0].match(regextm) != null) {
                             var search_str = _('themoon', 'cosmos_keywords');
                             var wiki_request = "https://"+ langue[0] +".wikipedia.org/w/api.php?format=json&action=query&prop=extracts|pageimages&exintro&explaintext&generator=search&gsrsearch= intitle:"+ search_str +"&gsrlimit=1&redirects=1";    
                         };
                         if (values[0].match(regexpz) != null | values[0].match(regextp) != null) {
-                            console.log("Alleluia !!!!");
                             var search_str = _('planet', 'cosmos_keywords');
                         var wiki_request = "https://"+ langue[0] +".wikipedia.org/w/api.php?format=json&action=query&prop=extracts|pageimages&exintro&explaintext&generator=search&gsrsearch= intitle:"+ search_str +" "+ full_str+"&gsrlimit=1&redirects=1";    
                         };
@@ -135,21 +135,18 @@ module.exports = {
                             if (apiValues[0]["bodies"][0]["isPlanet"] == false && apiValues[0]["bodies"][0]["aroundPlanet"] == null ){ 
                                 var body_type="other";
                             };
-                            console.log(typeof apiValues[1]["query"]);
                             if (typeof apiValues[1]["query"] != "undefined") {
-                                console.log("OMG");
                             var object = apiValues[1]["query"]["pages"];
                             var thekey = Object.keys(object);
                             var extrait = apiValues[1]["query"]["pages"][thekey]["extract"].substring(0, 300);
                             var trimmed = extrait.substr(0, Math.min(extrait.length, extrait.lastIndexOf(".")));
                             if (typeof apiValues[1]["query"]["pages"][thekey]["thumbnail"] == "object") {
                                 var imgregex= /\/*px-/gi;
-                                var image = apiValues[1]["query"]["pages"][thekey]["thumbnail"]["source"].replace("/50px-", "/130px-");
+                                var temp_image = apiValues[1]["query"]["pages"][thekey]["thumbnail"]["source"].replace("/thumb/", "/");
+                                var image = temp_image.substring(0, temp_image.indexOf("/50px-"));
                                 } else {var image = null }
-
                             var wiki_status = "ok";
                             } else {var wiki_status = "niet";};
-                            console.log("STATUS: "+wiki_status);
                             if (wiki_status == "ok" && typeof apiValues[1]["query"]["pages"][thekey]["title"] == "string" && apiValues[1]["query"]["pages"][thekey]["title"] != "") {
                                 var title = apiValues[1]["query"]["pages"][thekey]["title"];
                             } else {
@@ -192,10 +189,8 @@ module.exports = {
                                 var moons=[];
                                 for (var i = 0 ; i <= apiValues[0]["bodies"][0]["moons"].length - 1; i++) {
                                         moons.push(apiValues[0]["bodies"][0]["moons"][i]["moon"].replace("/", " "));
-                                    //var moond = moonz.toString();
                                 };
                                 var moonsum=moons.length;
-                                console.log("MOONZ: "+moonsum);
                             }else {moonz= null};
                             var aphelion= apiValues[0]["bodies"][0]["aphelion"]+" km";
                             var semimajorAxis= apiValues[0]["bodies"][0]["semimajorAxis"]+" km";
@@ -213,7 +208,6 @@ module.exports = {
                             var discoveredBy= apiValues[0]["bodies"][0]["discoveredBy"];
                             var discoveryDate= apiValues[0]["bodies"][0]["discoveryDate"];
                             var aroundPlanet= apiValues[0]["bodies"][0]["aroundPlanet"];
-
                             var orbital=["semimajorAxis", "aphelion", "eccentricity", "inclination", "sideralOrbit"];
                             var phys=["massValue", "massExponent", "volValue", "volExponent", "density", "gravity", "ezcape", "meanRadius", "equaRadius", "polarRadius", "flattening", "sideralRotation"];
                             var orbitalVal=[];
@@ -248,8 +242,7 @@ module.exports = {
                                     physFieldsR.push(key);
                                 };
                             });    
-                            //redisTools.saveToCache(CACHE_KEY, result, CACHE_EXPIRE);
-                            resolve     ({      cosmic: {   type: body_type,
+                            var resolver = [{      cosmic: {   type: body_type,
                                                             name: element,
                                                             aphelion: formatNumber(aphelion),
                                                             semimajorAxis: formatNumber(semimajorAxis),
@@ -291,13 +284,18 @@ module.exports = {
                                                         title: title,
                                                         langue: langue 
                                                       }
-                                        });
+                                        }];
+                                        //redisTools.saveToCache(CACHE_KEY, resolver, CACHE_EXPIRE);
+                                        resolve(resolver);
                     }
                     )};
                 });
+
             } else {
                 reject("Couldn't process query.")
             }
+
+
         });
     },
     getName: function (i18n) {
@@ -316,8 +314,7 @@ module.exports = {
             var thesun = _("thesun", "cosmos_keywords");
             var theearth = _("theearth", "cosmos_keywords");
             Object.keys(qwantsmos["keywords"]).forEach(function (key) {
-                if (keywordz !== "")
-                    keywordz += "|";
+                if (keywordz !== "") keywordz += "|";
                 keywordz = keywordz + qwantsmos["keywords"][key];
             });
             Object.keys(qwantsmos["planets"]).forEach(function (key) {
@@ -335,11 +332,11 @@ module.exports = {
                     others += "|";
                 others = others + qwantsmos["others"][key];
             });
-            console.log(others);
             var meteor = "meteor|asteroid";
             return "("+ theearth +")|("+ thesun +")|("+ themoon +")|((" + planet + ") (" + planets + "))|((" + qwantsmos["keywords"]["moon"] + ") (" + moons + "))|((" + meteor + ") ("+ others +"))"
         },
     trigger: "strict",
+    script: "cosmos",
     flag: "i",
     timeout: 3600,
     cache: 10800,

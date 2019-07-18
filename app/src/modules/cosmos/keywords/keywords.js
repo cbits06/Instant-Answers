@@ -29,7 +29,7 @@ module.exports = function (i18n) {
 
             "La Lune": [_("Moon","cosmos_bodies")],
             "Phobos": [_("Phobos","cosmos_bodies")],
-            "Deïmos": [_("Deimos","cosmos_bodies")],
+            "De(i|ï)mos": [_("De(i|ï)mos","cosmos_bodies")],
             "Io": [_("Io","cosmos_bodies")],
             "Europe": [_("Europa","cosmos_bodies")],
             "Ganym(è|e)de": [_("Ganymede","cosmos_bodies")],

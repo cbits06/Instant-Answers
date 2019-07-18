@@ -6,8 +6,10 @@
   font-size: 14px;
   border: 1px groove lightgrey;
   padding: 24px;
+  padding-bottom: 70px;
   color: #353c52;
   display: block;
+  transition: max-height 0.3s ease-out;
 }
 .ia__cosmos__container a {
   color: black;
@@ -30,30 +32,35 @@
   text-decoration: underline;
 }
 
-.ia__cosmos__header {
+.ia__cosmos__main {
   display: grid;
   grid-template-columns: 70% 30%;
 }
 
 .ia__cosmos__left {
   float: left;
+  display: block;
+}
+
+.ia__cosmos__description {
+  display: block;
+  margin-top: 10px;
 }
 
 .ia__cosmos__right {
-  padding: 24px;
-  width: 160px;
-  height: 160px;
+  height: 180px;
+  width: 180px;
   background-color: black;
-  justify-self: end;
   border-radius: 50%;
   background-image: radial-gradient(white, rgba(0, 0, 0, 0.2) 2px, transparent 40px), radial-gradient(white, rgba(0, 0, 0, 0.15) 1px, transparent 30px), radial-gradient(white, rgba(0, 0, 0, 0.1) 2px, transparent 40px), radial-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1) 2px, transparent 30px);
   background-size: 50px 50px;
-  background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+  background-position: 4px 7px, 37px 62px, 93px 287px, 95px 118px;
+  display: flex;
+  padding: 18px;
+  margin-left: 8px;
 }
 
 .ia__cosmos__img {
-  width: 120px;
-  height: 120px;
   border-radius: 50%;
 }
 
@@ -62,11 +69,11 @@
   display: block;
   color: #353c52;
   font-weight: bold;
-  padding-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .ia__cosmos__subtitle {
-  display: block;
+  display: inline;
   padding-bottom: 12px;
   font-weight: bold;
 }
@@ -76,14 +83,10 @@
   padding-bottom: 12px;
 }
 
-.ia__cosmos_description {
-  display: block;
-  padding-bottom: 6px;
-}
-
 .ia__cosmos__wikilink {
   display: block;
-  padding-bottom: 12px;
+  padding-top: 12px;
+  margin-bottom: 24px;
 }
 
 .ia__cosmos__orbital__title {
@@ -95,7 +98,7 @@
 .ia__cosmos__orbital {
   display: grid;
   grid-template-columns: 50% 50%;
-  padding-bottom: 12px;
+  padding-bottom: 24px;
 }
 
 .ia__cosmos__physical__title {
@@ -106,7 +109,7 @@
 .ia__cosmos__physical {
   display: grid;
   grid-template-columns: 50% 50%;
-  padding-top: 12px;
+  margin-bottom: 50px;
 }
 
 .ia__cosmos__td-field {
@@ -114,63 +117,157 @@
   font-weight: bold;
 }
 
-.ia__cosmos__btn {
-  position: absolute;
-  bottom: 0;
-  clear: both;
-  display: flex;
-  justify-content: center;
-  height: 56px;
-  line-height: 56px;
-  font-size: 12px;
-  text-transform: uppercase;
-  font-weight: 500;
-  width: 100%;
-  left: 0;
-  border-top: 1px solid #e0e1e6;
-  cursor: pointer;
-  background-color: lightgrey;
+.ia__cosmos__data {
+  display: none;
+}
+
+.ia__cosmos__data--expanded {
+  display: block;
+}
+
+.ia__cosmos__datacontainer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
 }
 
 .ia__cosmos__mobile {
   display: none;
 }
 
-.ia__cosmos__orbital__expand {
+.ia__cosmos__btn {
+  position: absolute;
+  bottom: 0;
+  justify-content: center;
+  width: 100%;
+  font-weight: 500;
+  left: 0;
+  border-top: 1px solid #e0e1e6;
+  clear: both;
+  display: block;
+  height: 56px;
+  line-height: 56px;
+  font-size: 12px;
+  color: #5c6f84;
+  text-transform: uppercase;
+  text-align: center;
+  cursor: pointer;
+  border-top-width: 1px;
+  border-top-style: solid;
+  background-color: lightgrey;
+}
+.ia__cosmos__btn svg {
+  vertical-align: middle;
+  transition: transform .2s;
+}
+
+.ia__cosmos__btn--more {
+  display: inline-block;
+}
+
+.ia__cosmos__btn--less {
   display: none;
 }
 
-.ia__cosmos__physical__expand {
+.ia__cosmos__container--expanded .ia__cosmos__btn--less {
+  display: inline-block;
+}
+.ia__cosmos__container--expanded .ia__cosmos__btn--more {
   display: none;
 }
+.ia__cosmos__container--expanded svg {
+  transform: rotate(180deg);
+}
 
-/* Tablet*/
+.ia__cosmos__moonbtn {
+  display: inline;
+  margin-left: 5px;
+  text-decoration: none;
+}
+
+.ia__cosmos__moonlist {
+  display: none;
+  position: relative;
+}
+
+.ia__cosmos__moonlist--more {
+  display: inline;
+  cursor: pointer;
+  font-style: italic;
+  margin-left: 2px;
+}
+
+.ia__cosmos__moonlist--less {
+  display: none;
+  cursor: pointer;
+  font-style: italic;
+  margin-left: 2px;
+}
+
+.ia__cosmos__moons--expanded .ia__cosmos__moonlist {
+  display: inline;
+}
+.ia__cosmos__moons--expanded .ia__cosmos__moonlist--more {
+  display: none;
+}
+.ia__cosmos__moons--expanded .ia__cosmos__moonlist--less {
+  display: inline;
+}
+
+.ia__cosmos__moons {
+  max-height: 29px;
+  transition: max-height 0.3s ease-out;
+  display: inline;
+  overflow: hidden;
+}
+
+.ia__cosmos__physical__table {
+  position: relative;
+}
+
+/* Mobile*/
 @media (max-width: 1450px) {
+  .ia__cosmos__datacontainer {
+    margin-bottom: 40px;
+  }
+
+  .ia__cosmos__container {
+    padding-bottom: 0px;
+  }
+
   .ia__cosmos__title {
-    font-size: 28px;
-    display: inline;
-    color: #353c52;
-    font-weight: bold;
-    padding-bottom: 12px;
+    font-size: 18px;
+    margin-bottom: 7px;
+  }
+
+  .ia__cosmos__subtitle {
+    margin-bottom: 7px;
+    font-size: 14px;
   }
 
   .ia__cosmos__header {
     display: inline;
-    grid-template-columns: 100%;
+    grid-template-columns: 70% 30%;
   }
 
   .ia__cosmos__left {
     float: left;
   }
 
+  .ia__cosmos__description {
+    margin-top: 7px;
+    padding-bottom: 7px;
+    display: block;
+  }
+
   .ia__cosmos__mobile {
     float: right;
-    display: inline;
+    display: flex;
     padding: 15px;
+    margin: 0px 0px 10px 10px;
     width: 100px;
     height: 100px;
     background-color: black;
-    justify-self: end;
     border-radius: 50%;
     background-image: radial-gradient(white, rgba(0, 0, 0, 0.2) 2px, transparent 40px), radial-gradient(white, rgba(0, 0, 0, 0.15) 1px, transparent 30px), radial-gradient(white, rgba(0, 0, 0, 0.1) 2px, transparent 40px), radial-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1) 2px, transparent 30px);
     background-size: 50px 50px;
@@ -178,40 +275,29 @@
   }
 
   .ia__cosmos__img-mobile {
-    display: inline;
-    height: 70px;
-    width: 70px;
     border-radius: 50%;
-  }
-
-  .ia__cosmos__img {
-    display: none;
   }
 
   .ia__cosmos__right {
     display: none;
   }
 
-  .ia__cosmos__orbital {
+  .ia__cosmos__img {
     display: none;
+  }
+
+  .ia__cosmos__orbital {
     grid-template-columns: 100%;
-    padding-bottom: 12px;
+    margin-bottom: 12px;
   }
 
   .ia__cosmos__physical {
-    display: none;
     grid-template-columns: 100%;
-    padding-bottom: 12px;
+    margin-bottom: 50px;
   }
 
-  .ia__cosmos__physical-mobile {
-    grid-template-columns: 100%;
-    padding-bottom: 12px;
-  }
-
-  .ia__cosmos__orbital-mobile {
-    grid-template-columns: 100%;
-    padding-bottom: 12px;
+  .ia__cosmos__physical__title {
+    margin-top: 7px;
   }
 
   .ia__cosmos__td-field {
@@ -220,42 +306,8 @@
     width: 50%;
   }
 
-  .ia__cosmos__physical__title {
-    display: none;
-  }
-
-  .ia__cosmos__orbital__title {
-    display: none;
-  }
-
-  .ia__cosmos__physical__expand {
-    display: inline;
-    cursor: pointer;
-  }
-
-  .ia__cosmos__orbital__expand {
-    display: inline;
-    cursor: pointer;
-  }
-
-  .ia__cosmos__physical__expand:before {
-    content: "\25B8 ";
-    line-height: 12px;
-  }
-
-  .ia__cosmos__orbital__expand:before {
-    content: "\25B8 ";
-    line-height: 12px;
-  }
-
-  .ia__cosmos__physical__marker[open] summary:before {
-    content: "\25BE ";
-    line-height: 12px;
-  }
-
-  .ia__cosmos__orbital__marker[open] summary:before {
-    content: "\25BE ";
-    line-height: 12px;
+  .ia__cosmos__main {
+    grid-template-columns: 100%;
   }
 }
 

@@ -4,272 +4,179 @@
 <link rel="stylesheet" href="css/cosmos.css" type="text/css">
 <div class="ia__cosmos__container">
 	<div class="ia__cosmos__header">
-		<div class="ia__cosmos_left">
-			<span class="ia__cosmos__title"> {{= it.data.wiki['title'] }} </span>
-			<div class="ia__cosmos__mobile">
-					<img class="ia__cosmos__img-mobile" src=" {{= it.data.wiki['img'] }} " alt="{{= it.data.cosmic['name'] }}">
+		<div class="ia__cosmos__main">
+			
+			<div class="ia__cosmos_left">
+				<div class="ia__cosmos__mobile">
+					<img class="ia__cosmos__img-mobile" src=" {{= it.data[0].wiki['img'] }} " alt="{{= it.data[0].cosmic['name'] }}">
 				</div>
-			{{? it.data.cosmic['moons'] != null}}
-			<span class="ia__cosmos__subtitle">{{= _('Moon(s)', 'cosmos_fields') }}: 
-				{{~ it.data.cosmic.moons :value :index }}
-					{{var count = it.data.cosmic.moons.length - 1; }}
-					<a href="?q={{= _('Moon', 'cosmos_fields') }}+{{=value}}&locale={{= it.data.wiki['langue'][0]}}_{{= it.data.wiki['langue'][1]}}&lang={{= it.data.wiki['langue'][0]}}_{{= it.data.wiki['langue'][1]}}">
-						{{= value}}
-					</a>
-					{{? index < count}}, {{?}}
-					
-				{{~}}
+				<span class="ia__cosmos__title">
+					{{= it.data[0].wiki['title']}}
+				</span>
+				{{? it.data[0].cosmic['moons'] != null}}
+					{{var moonlist=[];}}
+				<span class="ia__cosmos__subtitle">
+					{{= _('Moon(s)', 'cosmos_fields') }}: 
+					{{~ it.data[0].cosmic.moons :value :index }}	
+						{{? index <= 2}}
+							<a href="?q={{= _('Moon', 'cosmos_fields') }}+{{=value}}&locale={{= it.data[0].wiki['langue'][0]}}_{{= it.data[0].wiki['langue'][1]}}&lang={{= it.data[0].wiki['langue'][0]}}_{{= it.data[0].wiki['langue'][1]}}">
+								{{= value}}
+							</a>
+							{{? it.data[0].cosmic.moons.length !== index +1 && index !== 2 }}, {{?}}
+							{{??}}
+								{{ moonlist.push(value); }}
+							{{?}}
+					{{~}}
+					{{var nb=0;}}
+					<span class="ia__cosmos__moons">
+						<span class="ia__cosmos__moonlist">, 
+							{{~ moonlist :valeur :index }}
+								{{ var nb=moonlist.length -1; }}
+								<a href="?q={{= _('Moon', 'cosmos_fields') }}+{{=value}}&locale={{= it.data[0].wiki['langue'][0]}}_{{= it.data[0].wiki['langue'][1]}}&lang={{= it.data[0].wiki['langue'][0]}}_{{= it.data[0].wiki['langue'][1]}}">
+									{{= valeur}}
+								</a>
+								{{? index < nb }}, {{?}}
 
-				
-				
-			</span>
-			{{?}}
-			{{? it.data.cosmic['discoveredBy'] != ""}}
-			<span class="ia__cosmos__discovery"><b>{{= _('Discovered by', 'cosmos_fields') }}:</b> {{= it.data.cosmic['discoveredBy']}} ({{= it.data.cosmic['discoveryDate'] }} )  </span>
-			{{?}}
-			{{? it.data.wiki["wiki_status"] == 'ok'}}
-			<span class="ia__cosmos__description"> {{= it.data.wiki['extract'] }}[..] </span>
-			<span class="ia__cosmos__wikilink">  <a href="https://{{= it.data.wiki['langue'][0]}}.wikipedia.org/wiki/{{= it.data.wiki['title'] }}">Voir plus sur Wikipedia</a>  </span>
-			{{?}}
-		</div>
-		<div class="ia__cosmos__right">
-			 <img class="ia__cosmos__img" src=" {{= it.data.wiki['img'] }} " alt="{{= it.data.cosmic['name'] }}">
+							{{~}}
+						</span>
+						{{? it.data[0].cosmic['moonsum'] > 3}}
+							<div class="ia__cosmos__moonbtn">
+								<span class="ia__cosmos__moonlist--less">  &lt;&lt;Voir Moins
+								</span>
+								<span class="ia__cosmos__moonlist--more">  &gt;&gt;Voir Plus
+								</span>
+							</div>
+						{{?}}
+					</span>
+				</span>
+				{{?}}
+				{{? it.data[0].cosmic['discoveredBy'] != ""}}
+				<span class="ia__cosmos__discovery">
+					<b>{{= _('Discovered by', 'cosmos_fields') }}:</b> {{= it.data[0].cosmic['discoveredBy']}} ({{= it.data[0].cosmic['discoveryDate'] }} )  
+				</span>
+				{{?}}
+				{{? it.data[0].wiki["wiki_status"] == 'ok'}}
+				<span class="ia__cosmos__description"> 
+					{{= it.data[0].wiki['extract'] }}[..] 
+				</span>
+				<span class="ia__cosmos__wikilink">  
+					<a href="https://{{= it.data[0].wiki['langue'][0]}}.wikipedia.org/wiki/{{= it.data[0].wiki['title'] }}">Voir plus sur Wikipedia</a>
+				</span>
+				{{?}}
+			</div>
+			<div class="ia__cosmos__right">
+				 <img class="ia__cosmos__img" src=" {{= it.data[0].wiki['img'] }} " alt="{{= it.data[0].cosmic['name'] }}">
+			</div>
 		</div>
 	</div>
-	{{? it.data.cosmic["type"] != "other" }}
-	
-				
+	{{? it.data[0].cosmic["type"] != "other" }}
+	<div class="ia__cosmos__datacontainer">
+		<div class="ia__cosmos__data">
 			<span class="ia__cosmos__orbital__title">{{= _('Orbital characteristics', 'cosmos_fields') }}</span>
-			<div class="ia__cosmos__orbital">
-				
-				<div class="ia__cosmos__orbital-left">
-					<table style="width:100%">
-
-						{{~ it.data.cosmic["orbitalFields"]:value }}
-							<tr class="ia__cosmos__tr">
-								<td class="ia__cosmos__td-field">{{= _(value, 'cosmos_fields') }}</td>
-								<td class="ia__cosmos__td-val">{{= it.data.cosmic[value] }}</td>
-							</tr>	
-						{{~}}
-					</table>
-				</div>
-
-				<div class="ia__cosmos__orbital-right">
-					<table style="width:100%">
-
-						{{~ it.data.cosmic["orbitalFieldsR"]:val }}
-							<tr class="ia__cosmos__tr">
-								<td class="ia__cosmos__td-field">{{= _(val, 'cosmos_fields') }}</td>
-								<td class="ia__cosmos__td-val">{{= it.data.cosmic[val] }}</td>
-							</tr>	
-						{{~}}
-					</table>
-				</div>
-			</div>
-	
-
-		
-			<span class="ia__cosmos__physical__title">{{=  _('Physical characteristics', 'cosmos_fields') }}</span>
-
-			<div class="ia__cosmos__physical">
-				
-				<div class="ia__cosmos__physical-left">
-
-					<table style="width:100%">
-					{{? it.data.cosmic['mass'] != 0 }}
-					<tr class="ia__cosmos__tr">
-						<td class="ia__cosmos__td-field"> {{= _('mass', 'cosmos_fields') }} </td>
-						<td class="ia__cosmos__td-val"> {{= it.data.cosmic['massValue'] }}x10<sup>{{= it.data.cosmic['massExponent'] }}</sup> kg </td>
-					</tr>
-					{{?}}
-					{{? it.data.cosmic['volume'] != 0 }}
-					<tr class="ia__cosmos__tr">
-						<td class="ia__cosmos__td-field"> {{= _('volume', 'cosmos_fields') }} </td>
-						<td class="ia__cosmos__td-val"> {{= it.data.cosmic['volValue'] }}x10<sup>{{= it.data.cosmic['volExponent']}}</sup> km<sup>3</sup> </td>
-					</tr>
-					{{?}}
-					{{? it.data.cosmic['density'] != 0 }}
-					<tr class="ia__cosmos__tr">
-						<td class="ia__cosmos__td-field"> {{= _('density', 'cosmos_fields') }} </td>
-						<td class="ia__cosmos__td-val"> {{= it.data.cosmic['density'] }} g.cm<sup>3</sup> </td>
-					</tr>
-					{{?}}
-					{{? it.data.cosmic['gravity'] != 0 }}
-					<tr class="ia__cosmos__tr">
-						<td class="ia__cosmos__td-field"> {{= _('gravity', 'cosmos_fields') }} </td>
-						<td class="ia__cosmos__td-val"> {{= it.data.cosmic['gravity'] }} m.s<sup>-2</sup> </td>
-					</tr class="ia__cosmos__tr">
-					{{?}}
-					{{? it.data.cosmic['ezcape'] != 0 }}
-					<tr class="ia__cosmos__tr">
-						<td class="ia__cosmos__td-field"> {{= _('ezcape', 'cosmos_fields') }} </td>
-						<td class="ia__cosmos__td-val"> {{= it.data.cosmic['ezcape'] }} m.s<sup>-1</sup> </td>
-					</tr>
-					{{?}}
-					</table>
-				</div>
-
-				
-				<div class="ia__cosmos__physical-right">
-					
-					<table style="width:100%">
-					{{? it.data.cosmic['meanRadius'] != 0 }}
-					<tr class="ia__cosmos__tr">
-						<td class="ia__cosmos__td-field"> {{= _('meanRadius', 'cosmos_fields') }} </td>
-						<td class="ia__cosmos__td-val"> {{= it.data.cosmic['meanRadius'] }} km </td>
-					</tr>
-					{{?}}
-					{{? it.data.cosmic['equaRadius'] != 0 }}
-					<tr class="ia__cosmos__tr">
-						<td class="ia__cosmos__td-field"> {{= _('equaRadius', 'cosmos_fields') }} </td>
-						<td class="ia__cosmos__td-val"> {{= it.data.cosmic['equaRadius'] }} km </td>
-					</tr>
-					{{?}}
-					{{? it.data.cosmic['polarRadius'] != 0 }}
-					<tr class="ia__cosmos__tr">
-						<td class="ia__cosmos__td-field"> {{= _('polarRadius', 'cosmos_fields') }} </td>
-						<td class="ia__cosmos__td-val"> {{= it.data.cosmic['polarRadius'] }} </td>
-					</tr>
-					{{?}}
-					{{? it.data.cosmic['flattening'] != 0 }}
-					<tr class="ia__cosmos__tr">
-						<td class="ia__cosmos__td-field"> {{= _('flattening', 'cosmos_fields') }} </td>
-						<td class="ia__cosmos__td-val"> {{= it.data.cosmic['flattening'] }} </td>
-					</tr>
-					{{?}}
-					{{? it.data.cosmic['sideralRotation'] != 0 }}
-					<tr class="ia__cosmos__tr">
-						<td class="ia__cosmos__td-field"> {{= _('sideralRotation', 'cosmos_fields') }} </td>
-						<td class="ia__cosmos__td-val"> {{= it.data.cosmic['sideralRotation'] }} h </td>
-					</tr>
-					{{?}}
-					</table>
-					
-				</div>
-
-			</div>
-
-			<div>
-				<article>
-					<details class="ia__cosmos__orbital__marker">
-					<summary class="ia__cosmos__orbital__expand">{{=  _('Orbital characteristics', 'cosmos_fields') }}</summary>
-						<div class="ia__cosmos__orbital-mobile">
-						<div class="ia__cosmos__orbital-left">
+				<div class="ia__cosmos__orbital">
+					<div class="ia__cosmos__orbital-left">
 						<table style="width:100%">
-
-						{{~ it.data.cosmic["orbitalFields"]:value }}
-							<tr class="ia__cosmos__tr">
-								<td class="ia__cosmos__td-field">{{= _(value, 'cosmos_fields') }}</td>
-								<td class="ia__cosmos__td-val">{{= it.data.cosmic[value] }}</td>
-							</tr>	
-						{{~}}
-					</table>
+							{{~ it.data[0].cosmic["orbitalFields"]:value }}
+								<tr class="ia__cosmos__tr">
+									<td class="ia__cosmos__td-field">{{= _(value, 'cosmos_fields') }}</td>
+									<td class="ia__cosmos__td-val">{{= it.data[0].cosmic[value] }}</td>
+								</tr>	
+							{{~}}
+						</table>
+					</div>
+					<div class="ia__cosmos__orbital-right">
+						<table style="width:100%">
+							{{~ it.data[0].cosmic["orbitalFieldsR"]:val }}
+								<tr class="ia__cosmos__tr">
+									<td class="ia__cosmos__td-field">{{= _(val, 'cosmos_fields') }}</td>
+									<td class="ia__cosmos__td-val">{{= it.data[0].cosmic[val] }}</td>
+								</tr>	
+							{{~}}
+						</table>
+					</div>
 				</div>
-
-				<div class="ia__cosmos__orbital-right">
-					<table style="width:100%">
-
-						{{~ it.data.cosmic["orbitalFieldsR"]:val }}
-							<tr class="ia__cosmos__tr">
-								<td class="ia__cosmos__td-field">{{= _(val, 'cosmos_fields') }}</td>
-								<td class="ia__cosmos__td-val">{{= it.data.cosmic[val] }}</td>
-							</tr>	
-						{{~}}
-					</table>
+				<span class="ia__cosmos__physical__title">{{=  _('Physical characteristics', 'cosmos_fields') }}</span>
+				<div class="ia__cosmos__physical">
+					<div class="ia__cosmos__physical-left">
+						<table style="width:100%">
+						{{? it.data[0].cosmic['mass'] != 0 }}
+						<tr class="ia__cosmos__tr">
+							<td class="ia__cosmos__td-field"> {{= _('mass', 'cosmos_fields') }} </td>
+							<td class="ia__cosmos__td-val"> {{= it.data[0].cosmic['massValue'] }}x10<sup>{{= it.data[0].cosmic['massExponent'] }}</sup> kg </td>
+						</tr>
+						{{?}}
+						{{? it.data[0].cosmic['volume'] != 0 }}
+						<tr class="ia__cosmos__tr">
+							<td class="ia__cosmos__td-field"> {{= _('volume', 'cosmos_fields') }} </td>
+							<td class="ia__cosmos__td-val"> {{= it.data[0].cosmic['volValue'] }}x10<sup>{{= it.data[0].cosmic['volExponent']}}</sup> km<sup>3</sup> </td>
+						</tr>
+						{{?}}
+						{{? it.data[0].cosmic['density'] != 0 }}
+						<tr class="ia__cosmos__tr">
+							<td class="ia__cosmos__td-field"> {{= _('density', 'cosmos_fields') }} </td>
+							<td class="ia__cosmos__td-val"> {{= it.data[0].cosmic['density'] }} g.cm<sup>3</sup> </td>
+						</tr>
+						{{?}}
+						{{? it.data[0].cosmic['gravity'] != 0 }}
+						<tr class="ia__cosmos__tr">
+							<td class="ia__cosmos__td-field"> {{= _('gravity', 'cosmos_fields') }} </td>
+							<td class="ia__cosmos__td-val"> {{= it.data[0].cosmic['gravity'] }} m.s<sup>-2</sup> </td>
+						</tr class="ia__cosmos__tr">
+						{{?}}
+						{{? it.data[0].cosmic['ezcape'] != 0 }}
+						<tr class="ia__cosmos__tr">
+							<td class="ia__cosmos__td-field"> {{= _('ezcape', 'cosmos_fields') }} </td>
+							<td class="ia__cosmos__td-val"> {{= it.data[0].cosmic['ezcape'] }} m.s<sup>-1</sup> </td>
+						</tr>
+						{{?}}
+						</table>
+					</div>
+					<div class="ia__cosmos__physical-right">
+						<table style="width:100%" class="ia__cosmos__physical__table">
+						{{? it.data[0].cosmic['meanRadius'] != 0 }}
+						<tr class="ia__cosmos__tr">
+							<td class="ia__cosmos__td-field"> {{= _('meanRadius', 'cosmos_fields') }} </td>
+							<td class="ia__cosmos__td-val"> {{= it.data[0].cosmic['meanRadius'] }} km </td>
+						</tr>
+						{{?}}
+						{{? it.data[0].cosmic['equaRadius'] != 0 }}
+						<tr class="ia__cosmos__tr">
+							<td class="ia__cosmos__td-field"> {{= _('equaRadius', 'cosmos_fields') }} </td>
+							<td class="ia__cosmos__td-val"> {{= it.data[0].cosmic['equaRadius'] }} km </td>
+						</tr>
+						{{?}}
+						{{? it.data[0].cosmic['polarRadius'] != 0 }}
+						<tr class="ia__cosmos__tr">
+							<td class="ia__cosmos__td-field"> {{= _('polarRadius', 'cosmos_fields') }} </td>
+							<td class="ia__cosmos__td-val"> {{= it.data[0].cosmic['polarRadius'] }} </td>
+						</tr>
+						{{?}}
+						{{? it.data[0].cosmic['flattening'] != 0 }}
+						<tr class="ia__cosmos__tr">
+							<td class="ia__cosmos__td-field"> {{= _('flattening', 'cosmos_fields') }} </td>
+							<td class="ia__cosmos__td-val"> {{= it.data[0].cosmic['flattening'] }} </td>
+						</tr>
+						{{?}}
+						{{? it.data[0].cosmic['sideralRotation'] != 0 }}
+						<tr class="ia__cosmos__tr">
+							<td class="ia__cosmos__td-field"> {{= _('sideralRotation', 'cosmos_fields') }} </td>
+							<td class="ia__cosmos__td-val"> {{= it.data[0].cosmic['sideralRotation'] }} h </td>
+						</tr>
+						{{?}}
+						</table>
+					</div>
 				</div>
-			</div>
-					</details>
-				</article>
-			</div>
-
-			<div>
-				<article>
-					<details class="ia__cosmos__physical__marker">
-						<summary class="ia__cosmos__physical__expand">{{=  _('Physical characteristics', 'cosmos_fields') }}</summary>
-						<div class="ia__cosmos__physical-mobile">
-				
-				<div class="ia__cosmos__physical-left">
-
-					<table style="width:100%">
-					{{? it.data.cosmic['mass'] != 0 }}
-					<tr class="ia__cosmos__tr">
-						<td class="ia__cosmos__td-field"> {{= _('mass', 'cosmos_fields') }} </td>
-						<td class="ia__cosmos__td-val"> {{= it.data.cosmic['massValue'] }}x10<sup>{{= it.data.cosmic['massExponent'] }}</sup> kg </td>
-					</tr>
-					{{?}}
-					{{? it.data.cosmic['volume'] != 0 }}
-					<tr class="ia__cosmos__tr">
-						<td class="ia__cosmos__td-field"> {{= _('volume', 'cosmos_fields') }} </td>
-						<td class="ia__cosmos__td-val"> {{= it.data.cosmic['volValue'] }}x10<sup>{{= it.data.cosmic['volExponent']}}</sup> km<sup>3</sup> </td>
-					</tr>
-					{{?}}
-					{{? it.data.cosmic['density'] != 0 }}
-					<tr class="ia__cosmos__tr">
-						<td class="ia__cosmos__td-field"> {{= _('density', 'cosmos_fields') }} </td>
-						<td class="ia__cosmos__td-val"> {{= it.data.cosmic['density'] }} g.cm<sup>3</sup> </td>
-					</tr>
-					{{?}}
-					{{? it.data.cosmic['gravity'] != 0 }}
-					<tr class="ia__cosmos__tr">
-						<td class="ia__cosmos__td-field"> {{= _('gravity', 'cosmos_fields') }} </td>
-						<td class="ia__cosmos__td-val"> {{= it.data.cosmic['gravity'] }} m.s<sup>-2</sup> </td>
-					</tr class="ia__cosmos__tr">
-					{{?}}
-					{{? it.data.cosmic['ezcape'] != 0 }}
-					<tr class="ia__cosmos__tr">
-						<td class="ia__cosmos__td-field"> {{= _('ezcape', 'cosmos_fields') }} </td>
-						<td class="ia__cosmos__td-val"> {{= it.data.cosmic['ezcape'] }} m.s<sup>-1</sup> </td>
-					</tr>
-					{{?}}
-					</table>
-				</div>
-
-				
-				<div class="ia__cosmos__physical-right">
-					
-					<table style="width:100%">
-					{{? it.data.cosmic['meanRadius'] != 0 }}
-					<tr class="ia__cosmos__tr">
-						<td class="ia__cosmos__td-field"> {{= _('meanRadius', 'cosmos_fields') }} </td>
-						<td class="ia__cosmos__td-val"> {{= it.data.cosmic['meanRadius'] }} km </td>
-					</tr>
-					{{?}}
-					{{? it.data.cosmic['equaRadius'] != 0 }}
-					<tr class="ia__cosmos__tr">
-						<td class="ia__cosmos__td-field"> {{= _('equaRadius', 'cosmos_fields') }} </td>
-						<td class="ia__cosmos__td-val"> {{= it.data.cosmic['equaRadius'] }} km </td>
-					</tr>
-					{{?}}
-					{{? it.data.cosmic['polarRadius'] != 0 }}
-					<tr class="ia__cosmos__tr">
-						<td class="ia__cosmos__td-field"> {{= _('polarRadius', 'cosmos_fields') }} </td>
-						<td class="ia__cosmos__td-val"> {{= it.data.cosmic['polarRadius'] }} </td>
-					</tr>
-					{{?}}
-					{{? it.data.cosmic['flattening'] != 0 }}
-					<tr class="ia__cosmos__tr">
-						<td class="ia__cosmos__td-field"> {{= _('flattening', 'cosmos_fields') }} </td>
-						<td class="ia__cosmos__td-val"> {{= it.data.cosmic['flattening'] }} </td>
-					</tr>
-					{{?}}
-					{{? it.data.cosmic['sideralRotation'] != 0 }}
-					<tr class="ia__cosmos__tr">
-						<td class="ia__cosmos__td-field"> {{= _('sideralRotation', 'cosmos_fields') }} </td>
-						<td class="ia__cosmos__td-val"> {{= it.data.cosmic['sideralRotation'] }} h </td>
-					</tr>
-					{{?}}
-					</table>
-					
-				</div>
-
-			</div>
-						
-					</details>
-				</article>
-			</div>
-			
+		</div>
+	</div>
 	{{?}}
-	
-	
+	<div class="ia__cosmos__btn">
+		<svg width="20" height="20" viewBox="0 0 24 24">
+			<use xlink:href="/img/v4/icon-spritesheet.svg#icon-chevron-down"></use>
+		</svg>
+		<span class="ia__cosmos__btn--more">Voir plus</span>
+		<span class="ia__cosmos__btn--less">Voir Moins</span>
+		<svg width="20" height="20" viewBox="0 0 24 24">
+			<use xlink:href="/img/v4/icon-spritesheet.svg#icon-chevron-down"></use>
+		</svg>
+	</div>
 </div>
-
