@@ -6,6 +6,7 @@ var IARuntime = function() {
     CosmicExpansion.prototype.run = function() {
 
        var moreMoons = $('.ia__cosmos__moonlist--more');
+       var img = $('.ia__cosmos__img');
        var lessMoons = $('.ia__cosmos__moonlist-less');
        var moonList = $('.ia__cosmos__moonlist');
        var moons = $('.ia__cosmos__moons');
@@ -15,12 +16,11 @@ var IARuntime = function() {
        var dataContainer = $('.ia__cosmos__datacontainer');
        var container = $('.ia__cosmos__container');
 
+       console.log("Height "+img.height);
+
        if (moonsBtn[0]) {
-            console.log("1");
             moonsBtn[0].addEventListener('click', function(e){
-                console.log("2");
                 if (hasClass(moons[0], 'ia__cosmos__moons--expanded')){
-                    console.log("qsdqs")
                     moons[0].style.maxHeight = "29px";
                     setTimeout(function(){
                         removeClass(moons[0], 'ia__cosmos__moons--expanded');

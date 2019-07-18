@@ -8,7 +8,7 @@
 			
 			<div class="ia__cosmos_left">
 				<div class="ia__cosmos__mobile">
-					<img class="ia__cosmos__img-mobile" src=" {{= it.data[0].wiki['img'] }} " alt="{{= it.data[0].cosmic['name'] }}">
+					<img class="ia__cosmos__img--mobile" src=" {{= it.data[0].wiki['img'] }} " alt="{{= it.data[0].cosmic['name'] }}">
 				</div>
 				<span class="ia__cosmos__title">
 					{{= it.data[0].wiki['title']}}

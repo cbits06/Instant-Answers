@@ -68,10 +68,7 @@
 
 .ia__cosmos__img {
     border-radius: 50%;
-    
-    
-    
-	    
+    margin: auto;
 }
 .ia__cosmos__title{
 	font-size: 28px;
@@ -238,6 +235,26 @@
 	position: relative;
 }
 
+.ia__cosmos__right--terraformed {
+
+    height: 180px;
+    width: 180px;
+    background-color: black;
+    border-radius: 50%;
+    background-image: radial-gradient(white, rgba(0, 0, 0, 0.2) 2px, transparent 40px), radial-gradient(white, rgba(0, 0, 0, 0.15) 1px, transparent 30px), radial-gradient(white, rgba(0, 0, 0, 0.1) 2px, transparent 40px), radial-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1) 2px, transparent 30px);
+    background-size: 50px 50px;
+    background-position: 4px 7px, 37px 62px, 93px 287px, 95px 118px;
+    padding: 3px;
+    margin-left: 8px;
+	}
+
+	.ia__cosmos__img--terraformed {
+
+	    border-radius: 50%;
+	    margin-top: 40px;
+
+	}
+
 /* Mobile*/
 @media (max-width: 1450px) {
 
@@ -292,8 +309,9 @@
 		background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
 	}
 
-	.ia__cosmos__img-mobile{
+	.ia__cosmos__img--mobile{
 		border-radius: 50%;
+		margin: auto; 
 	}
 
 	.ia__cosmos__right {
@@ -325,6 +343,26 @@
 	}
 	.ia__cosmos__main{
 		grid-template-columns: 100%;
+	}
+
+	.ia__cosmos__img--mobileTerraformed {
+
+	    border-radius: 50%;
+	    margin-top: 20px;
+	}
+
+	.ia__cosmos__mobileTerraformed {
+	    float: right;
+	    display: initial;
+	    padding: 4px;
+	    margin: 0px 0px 10px 10px;
+	    width: 100px;
+	    height: 100px;
+	    background-color: black;
+	    border-radius: 50%;
+	    background-image: radial-gradient(white, rgba(0, 0, 0, 0.2) 2px, transparent 40px), radial-gradient(white, rgba(0, 0, 0, 0.15) 1px, transparent 30px), radial-gradient(white, rgba(0, 0, 0, 0.1) 2px, transparent 40px), radial-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1) 2px, transparent 30px);
+	    background-size: 50px 50px;
+	    background-position: 2px -2px, 75px 110px, 132px 286px, 82px 121px;
 	}
 
 }
